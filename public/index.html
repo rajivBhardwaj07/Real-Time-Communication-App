@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RTC App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Auth screen -->
+  <section id="auth" class="screen">
+    <div class="card">
+      <h1>RTC App</h1>
+      <p class="sub">Video • Screen share • Files • Whiteboard • Encrypted chat</p>
+      <div class="tabs">
+        <button id="tab-login" class="tab active">Log in</button>
+        <button id="tab-register" class="tab">Register</button>
+      </div>
+      <input id="username" placeholder="Username" autocomplete="username" />
+      <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+      <button id="auth-submit" class="primary">Log in</button>
+      <div id="auth-error" class="error"></div>
+    </div>
+  </section>
+
+  <!-- Room picker -->
+  <section id="lobby" class="screen hidden">
+    <div class="card">
+      <h2>Hello, <span id="who"></span></h2>
+      <input id="room" placeholder="Room name (e.g. team-standup)" />
+      <input id="passphrase" placeholder="Shared passphrase (for E2E chat encryption)" />
+      <button id="join" class="primary">Join room</button>
+      <button id="logout" class="link">Log out</button>
+    </div>
+  </section>
+
+  <!-- Main app -->
+  <section id="app" class="screen hidden">
+    <header class="bar">
+      <div class="brand">RTC App · <span id="room-label"></span></div>
+      <div class="controls">
+        <button id="btn-mic" title="Toggle mic">Mic</button>
+        <button id="btn-cam" title="Toggle camera">Cam</button>
+        <button id="btn-screen" title="Share screen">Share Screen</button>
+        <button id="btn-board" title="Toggle whiteboard">Whiteboard</button>
+        <button id="btn-leave" class="danger">Leave</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div id="videos" class="videos"></div>
+
+      <aside class="side">
+        <div class="panel">
+          <h3>Chat (encrypted)</h3>
+          <div id="chat-log" class="chat-log"></div>
+          <form id="chat-form">
+            <input id="chat-input" placeholder="Type a message…" autocomplete="off" />
+            <button class="primary">Send</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Files</h3>
+          <input id="file-input" type="file" />
+          <button id="send-file" class="primary">Send file</button>
+          <div id="file-log" class="file-log"></div>
+        </div>
+      </aside>
+    </main>
+
+    <div id="board-wrap" class="board-wrap hidden">
+      <div class="board-tools">
+        <input type="color" id="board-color" value="#ff3b30" />
+        <input type="range" id="board-size" min="1" max="24" value="3" />
+        <button id="board-clear">Clear</button>
+        <button id="board-close">Close</button>
+      </div>
+      <canvas id="board"></canvas>
+    </div>
+  </section>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
