@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Real-Time Communication App: video, screen share, file share, whiteboard, auth, encryption",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'No build step required.'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

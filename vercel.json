@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "framework": null,
+  "buildCommand": "echo 'No build needed'",
+  "installCommand": "npm install --omit=dev",
+  "outputDirectory": "public",
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/server.js" },
+    { "source": "/socket.io/(.*)", "destination": "/server.js" }
+  ]
+}
