@@ -468,6 +468,26 @@ button.link:hover {
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.16); }
 
+/* Hosting warning banner */
+#host-banner {
+  position: fixed; left: 16px; right: 16px; bottom: 16px;
+  z-index: 200; padding: 14px 18px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255,84,112,0.95), rgba(255,138,91,0.95));
+  color: white; font-size: 13px; line-height: 1.55;
+  box-shadow: 0 12px 36px rgba(255,84,112,0.4);
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  backdrop-filter: blur(8px);
+  animation: cardIn 0.4s ease;
+}
+#host-banner a { color: white; text-decoration: underline; font-weight: 600; }
+#host-banner strong { white-space: nowrap; }
+#host-banner span { flex: 1; min-width: 280px; }
+#host-banner button {
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+  color: white; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: 500;
+}
+#host-banner button:hover { background: rgba(255,255,255,0.3); border-color: white; }
+
 /* Responsive */
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }

@@ -7,6 +7,23 @@
 // - Whiteboard: <canvas>, strokes broadcast over Socket.io
 // - Chat: AES-GCM via Web Crypto, key derived from shared passphrase (PBKDF2)
 
+// =============== hosting banner (shown if Socket.io can't connect, e.g. on Vercel) ===============
+function showHostingBanner(reason) {
+  if (document.getElementById('host-banner')) return;
+  const b = document.createElement('div');
+  b.id = 'host-banner';
+  b.innerHTML = `
+    <strong>⚠️ Real-time features unavailable on this host.</strong>
+    <span>This deployment can't sustain WebSocket connections (Socket.io error: ${String(reason || '').slice(0,80)}).
+    Video calling, chat, file sharing and the whiteboard need a host with persistent WebSockets — e.g.
+    <a href="https://render.com" target="_blank" rel="noopener">Render</a>,
+    <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>,
+    or <a href="https://fly.io" target="_blank" rel="noopener">Fly.io</a>.
+    The login UI here works, but in-room features won't.</span>
+    <button onclick="this.parentElement.remove()">Dismiss</button>`;
+  document.body.appendChild(b);
+}
+
 // =============== auth ===============
 const authEl = document.getElementById('auth');
 const lobbyEl = document.getElementById('lobby');
@@ -100,8 +117,10 @@ joinBtn.onclick = async () => {
   roomLabel.textContent = room;
   addVideoTile('self', me + ' (you)', localStream, true);
 
-  socket = io({ auth: { token } });
-  socket.on('connect_error', (e) => alert('Socket error: ' + e.message));
+  socket = io({ auth: { token }, reconnectionAttempts: 3, timeout: 8000 });
+  socket.on('connect_error', (e) => {
+    showHostingBanner(e.message);
+  });
 
   socket.on('connect', () => {
     socket.emit('join-room', { room });
